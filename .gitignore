@@ -1,0 +1,5 @@
+/.idea
+/.ipynb_checkpoints
+/venv
+/src/__pycache__
+test.py
