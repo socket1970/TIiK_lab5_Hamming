@@ -18,7 +18,8 @@ class HamCode:
         """
         ans = np.empty(shape=(array.shape[0], 8), dtype=int)
 
-        for i in tqdm(range(array.shape[0]), desc="Декодирование кода Хэмминга", disable=self.__progBarOff, leave=self.__leave):
+        for i in tqdm(range(array.shape[0]), desc="Декодирование кода Хэмминга", disable=self.__progBarOff,
+                      leave=self.__leave):
             new_array = np.hstack([array[i][:4], array[i][7:11]])
             new_array = self.__oneDecode(new_array)
 
@@ -31,7 +32,11 @@ class HamCode:
         """
 
         ans = np.empty(shape=(array.shape[0], 14), dtype=int)
-        for i in tqdm(range(array.shape[0]), desc="Кодирование кодом Хэмминга", disable=self.__progBarOff, leave=self.__leave):
+
+        for i in tqdm(range(array.shape[0]),
+                      desc="Кодирование кодом Хэмминга",
+                      disable=self.__progBarOff,
+                      leave=self.__leave):
             ans[i] = self.__oneDecode(array[i])
         return ans
 
@@ -40,7 +45,7 @@ class HamCode:
             Принимает 1 байт и возвращает 14 бит по коду Хэмминга(7.4).
         """
         return np.hstack([self.__bitRate(arr[:4]),
-                         self.__bitRate(arr[4:])])
+                          self.__bitRate(arr[4:])])
 
     def __bitRate(self, array: np.ndarray) -> np.ndarray:
         """
@@ -67,7 +72,9 @@ class HamCode:
         """
         array = np.hstack([new_array[:4], new_array[7:11]])
         # Первые 4 бита.
-        if source_array[4] != new_array[4] and source_array[5] != new_array[5] and source_array[6] != new_array[6]:  # Все три бита не сошлись.
+
+        # Все три бита не сошлись.
+        if source_array[4] != new_array[4] and source_array[5] != new_array[5] and source_array[6] != new_array[6]:
             self.__count += 1
             array[2] = int(not array[2])
         elif source_array[4] != new_array[4] and source_array[5] != new_array[5]:  # C0 и C1 не сошлись.
@@ -81,7 +88,9 @@ class HamCode:
             array[3] = int(not array[3])
 
         # Последние 4 бита.
-        elif source_array[11] != new_array[11] and source_array[12] != new_array[12] and source_array[13] != new_array[13]:  # Все три бита не сошлись.
+
+        # Все три бита не сошлись.
+        elif source_array[11] != new_array[11] and source_array[12] != new_array[12] and source_array[13] != new_array[13]:
             self.__count += 1
             array[5] = int(not array[5])
         elif source_array[11] != new_array[11] and source_array[12] != new_array[12]:  # C0 и C1 не сошлись.

@@ -22,8 +22,11 @@ class BMSM:
 
         n = ceil(n / 8)
 
-        new_arr = np.array([np.random.choice([0, 1], size=8, p=[probability, 1-probability])
-                            for _ in tqdm(range(n), desc="Генерация битов", disable=self.__progBarOff, leave=self.__leave)])
+        new_arr = np.array([np.random.choice([0, 1], size=8, p=[probability, 1 - probability])
+                            for _ in tqdm(range(n),
+                                          desc="Генерация битов",
+                                          disable=self.__progBarOff,
+                                          leave=self.__leave)])
 
         self.__quantityBite = new_arr.size
         self.__zero = np.count_nonzero(new_arr == 0)

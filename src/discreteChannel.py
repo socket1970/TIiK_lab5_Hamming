@@ -22,7 +22,10 @@ class DisChannel:
 
         # \033[41m - красный.
         # \033[49m - по умолчанию.
-        for i in tqdm(range(array.shape[0]), desc="Передача битов через канал", disable=self.__progBarOff, leave=self.__leave):
+        for i in tqdm(range(array.shape[0]),
+                      desc="Передача битов через канал",
+                      disable=self.__progBarOff,
+                      leave=self.__leave):
 
             for j in range(14):
                 if probability > np.random.uniform(0, 1):

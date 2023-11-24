@@ -10,13 +10,15 @@ from tqdm.notebook import tqdm
 
 class Model:
     def __init__(self, bite: int, probabilityError: str, probabilityZero=0.5, pdGeneralOff=False, pbOff=True,
-                 leave=True):
+                 leave=True, write_to_csv=True, name_csv_file="отчет"):
         self.__bite = bite
         self.__probabilityError = probabilityError.split(" ")
         self.__probabilityZero = probabilityZero
         self.__pbOff = pbOff  # Выключить прогресс бар каждого шага.
         self.__pdGeneralOff = pdGeneralOff  # Выключить общий прогресс бар.
         self.__leave = leave  # Удалять прогресс бар после выполнения.
+        self.__write_to_csv = write_to_csv  # Запись в csv таблицу
+        self.__name_csv_file = name_csv_file
 
     def start(self):
         bmsm = BMSM(pbOff=self.__pbOff, leave=self.__leave)
@@ -95,6 +97,10 @@ class Model:
 
         print(pt)
 
+        if self.__write_to_csv:
+            with open(f"{self.__name_csv_file}.csv", 'w', newline='') as f_output:
+                f_output.write(pt.get_csv_string())
+
     @staticmethod
     def __confidence_interval(array):
         n = 3  # числа после запятой.
@@ -127,3 +133,6 @@ class Model:
                 21 * p ** 2,
                 n))
         return ans
+
+
+# 0.010 0.025 0.040 0.055 0.07 10
