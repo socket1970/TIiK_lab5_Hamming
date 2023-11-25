@@ -82,6 +82,7 @@ class Model:
         plt.ylabel("Pk(*)")
         plt.legend()
 
+        plt.savefig("график.png")
         plt.show()
 
     def __getTable(self, data):
